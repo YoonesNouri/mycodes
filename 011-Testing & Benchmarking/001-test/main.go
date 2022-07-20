@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func sum(xi ...int) int {
+func Sum(xi ...int) int {
 	s := 0
 	for _, v := range xi {
 
@@ -11,5 +11,5 @@ func sum(xi ...int) int {
 	return s
 }
 func main() {
-	fmt.Println(sum(131, 223, 133, 454))
+	fmt.Println(Sum(141, 271, 133, 454))
 }
