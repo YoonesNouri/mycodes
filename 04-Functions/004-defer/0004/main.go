@@ -1,5 +1,4 @@
 //کد تاد برای ترتیب control flow در defer
-
 package main
 
 import "fmt"
