@@ -1,3 +1,6 @@
+github.com/GoesToEleven/go-programming v0.0.0-20181228215051-5519dbb87bc5 h1:WKpGS7hJdUWc4YHjvTY96oic8W7Bd6j4zYqAPeyf9N8=
+github.com/GoesToEleven/go-programming v0.0.0-20181228215051-5519dbb87bc5/go.mod h1:LldzOPaKdMOUfSPvqxm1wFrOU8CE1XhRhWn+tbMPe+w=
+github.com/YoonesNouri/YoonesNouri v0.0.0-20220716170515-35d492b06e9b h1:FEplbrL0Gq8Y98sI49stjYSRlLZ7+9zdRHdZi4hFbOk=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=

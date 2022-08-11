@@ -1,5 +1,5 @@
 //yoones ویدیو 160 Ninja #9 exercise #5 (1ص66 جزوه)
-//Fix the race condition you created in exercise #4 by using package 002-Slice - for range-atomic
+//Fix the race condition you created in exercise #4 by using package 002-Slice-for-range-atomic
 
 package main
 
