@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/YoonesNouri/YoonesNouri/012-Testing-and-Benchmarking/005-benchmark/0003-cat/mystr"
+	"github.com/GoesToEleven/go-programming/code_samples/009-testing/04-benchmark/03-cat/mystr"
 	"strings"
 )
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"YoonesNouri/YoonesNouri/tree/master/012-Testing-and-Benchmarking/005-benchmark/0001-live/saying"
 	"fmt"
+	"github.com/GoesToEleven/go-programming/code_samples/009-testing/04-benchmark/00-live/saying"
 )
 
 func main() {
