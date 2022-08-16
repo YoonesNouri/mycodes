@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/GoesToEleven/go-programming/code_samples/009-testing/04-benchmark/00-live/saying"
+	"github.com/YoonesNouri/YoonesNouri/012-Testing-and-Benchmarking/005-benchmark/0000-live/saying"
 )
 
 func main() {
