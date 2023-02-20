@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @YoonesNouri
 - 👀 I’m interested in web dev
-- 🌱 I’m currently learning Go with  https://www.udemy.com/user/toddmcleod/ 
+- 🌱 I’ve learned Go with  https://www.udemy.com/user/toddmcleod/ 
 - 💞️ I’m looking to collaborate on web projects
 - 📫 How to reach me yoones.nouri@gmail.com
 
