@@ -1,7 +1,7 @@
 package main
 
 import (
-	"refactor"
+"github.com/YoonesNouri/myprojects/tree/main/2_krunal_shimpi/16_Echo-restructure/refactor"
 )
 
 func main() {
