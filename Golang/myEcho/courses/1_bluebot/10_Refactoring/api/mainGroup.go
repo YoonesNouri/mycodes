@@ -1,7 +1,7 @@
 package api
 
 import (
-	"api/handlers"
+	"mymodule/1_bluebot/10_Refactoring/api/handlers"
 
 	"github.com/labstack/echo/v4"
 )

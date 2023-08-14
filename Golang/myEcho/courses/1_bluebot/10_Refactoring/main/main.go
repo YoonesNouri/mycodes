@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"router"
+	"mymodule/1_bluebot/10_Refactoring/router"
 )
 
 func main() {

@@ -4,9 +4,9 @@
 package router
 
 import (
-    "api/middlewares"
+    "mymodule/1_bluebot/10_Refactoring/api/middlewares"
     "github.com/labstack/echo/v4"
-    "api"
+    "mymodule/1_bluebot/10_Refactoring/api"
 )
 
 func New() *echo.Echo {
