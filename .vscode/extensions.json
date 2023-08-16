@@ -67,6 +67,8 @@
     "aleksandra.go-group-imports",
     "sonarsource.sonarlint-vscode",
     "golang.go-nightly",
-    "tabnine.tabnine-vscode"
+    "tabnine.tabnine-vscode",
+    "github.copilot",
+    "github.copilot-chat"
   ]
 }
