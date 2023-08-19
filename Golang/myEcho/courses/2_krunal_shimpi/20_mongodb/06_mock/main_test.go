@@ -30,3 +30,12 @@ func TestInsertData(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.IsType(t, &mongo.InsertOneResult{}, res)
 }
+
+func TestFindData(t *testing.T) {
+	mockCol := &mockCollection{}
+	users, err := findData(mockCol)
+	assert.Nil(t, err)
+	for _, user := range users {
+		assert.Equal(t, "yoones", user.FirstName)
+	}
+}
