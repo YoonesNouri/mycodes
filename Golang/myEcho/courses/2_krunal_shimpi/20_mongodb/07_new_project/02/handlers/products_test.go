@@ -1,16 +1,15 @@
-package main
+package handlers
 
 import (
-	"context"
-	"fmt"
-	"log"
+	"net/http/httptest"
+	"strings"
+	"testing"
 
 	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02/config"
-	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02/handlers"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -20,6 +19,7 @@ var (
 	db  *mongo.Database
 	col *mongo.Collection
 	cfg config.Properties
+	h   ProductHandler
 )
 
 func init() {
@@ -35,12 +35,24 @@ func init() {
 	col = db.Collection(cfg.CollectionName)
 }
 
-func main() {
-    e := echo.New()
-    e.Pre(middleware.RemoveTrailingSlash())
-    h := handlers.ProductHandler{Col: col}
-    e.POST("/products", h.CreateProducts, middleware.BodyLimit("1M"))
-    e.Logger.Infof("Listening on %s:%s", cfg.Host, cfg.Port)
-    e.Logger.Fatal(e.Start(fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)))
+func TestProduct(t *testing.T) {
+	t.Run("Test create product", func(t *testing.T) {
+		body := `
+		[{
+			"product_name": "alexa",
+			"price": 100,
+			"currency": "INR",
+			"vendor": "Amazon",
+			"accesories": ["charger","subscription","gift coupon"]
+		}]
+		`
+		req := httptest.NewRequest("POST", "/products", strings.NewReader(body))
+		res := httptest.NewRecorder()
+		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+		e := echo.New()
+		c := e.NewContext(req, res)
+		h.Col = col
+		err := h.CreateProducts(c, col)
+		assert.Nil(t, err)
+	})
 }
-
