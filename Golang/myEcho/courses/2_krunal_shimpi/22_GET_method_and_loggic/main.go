@@ -3,15 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"mymodule/2_krunal_shimpi/22_GET_method_and_loggic/config"
 	"mymodule/2_krunal_shimpi/22_GET_method_and_loggic/handlers"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/random"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
+	"github.com/labstack/gommon/random"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -32,6 +32,7 @@ func init() {
 	if err := cleanenv.ReadEnv(&cfg); err != nil {
 		log.Fatalf("Configuration can not be read: %v", err)
 	}
+
 	connectURI := fmt.Sprintf("mongodb://%s:%s", cfg.DBHost, cfg.DBPort)
 	c, err := mongo.Connect(context.Background(), options.Client().ApplyURI(connectURI))
 	if err != nil {
@@ -62,10 +63,12 @@ func addCorrelationID(next echo.HandlerFunc) echo.HandlerFunc {
 
 func main() {
 	e := echo.New()
+	e.Logger.SetLevel(log.ERROR)
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Pre(addCorrelationID)
 	h := handlers.ProductHandler{Col: col}
 	e.POST("/products", h.CreateProducts, middleware.BodyLimit("1M"))
+	e.GET("/products", h.GetProducts)
 	e.Logger.Infof("Listening on %s:%s", cfg.Host, cfg.Port)
 	e.Logger.Fatal(e.Start(fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)))
 }
