@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02/config"
+	"mymodule/2_krunal_shimpi/22_GET_method_and_loggic/config"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"

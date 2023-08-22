@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"mymodule/2_krunal_shimpi/20_mongodb/08_Correlation_ID_support/config"
-	"mymodule/2_krunal_shimpi/20_mongodb/08_Correlation_ID_support/handlers"
+	"mymodule/2_krunal_shimpi/21_Correlation_ID_support/config"
+	"mymodule/2_krunal_shimpi/21_Correlation_ID_support/handlers"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"

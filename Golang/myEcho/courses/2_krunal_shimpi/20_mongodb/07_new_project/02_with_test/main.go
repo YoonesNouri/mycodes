@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02/config"
-	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02/handlers"
+	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02_with_test/config"
+	"mymodule/2_krunal_shimpi/20_mongodb/07_new_project/02_with_test/handlers"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"
