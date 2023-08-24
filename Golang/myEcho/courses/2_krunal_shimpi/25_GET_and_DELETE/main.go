@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"mymodule/2_krunal_shimpi/24_PUT_PATCH_method/config"
-	"mymodule/2_krunal_shimpi/24_PUT_PATCH_method/handlers"
+	"mymodule/2_krunal_shimpi/25_GET_and_DELETE/config"
+	"mymodule/2_krunal_shimpi/25_GET_and_DELETE/handlers"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"
@@ -54,7 +54,7 @@ func addCorrelationID(next echo.HandlerFunc) echo.HandlerFunc {
 		} else {
 			NewID = id
 		}
-
+		
 		c.Request().Header.Set("CorrelationID", NewID)
 		c.Response().Header().Set("CorrelationID", NewID)
 		return next(c)
@@ -67,6 +67,8 @@ func main() {
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Pre(addCorrelationID)
 	h := &handlers.ProductHandler{Col: col}
+	e.GET("/products/:id", h.GetProduct)
+	e.DELETE("/products/:id", h.DeleteProduct)
 	e.PUT("/products", h.UpdateProduct, middleware.BodyLimit("1M"))
 	e.POST("/products", h.CreateProducts, middleware.BodyLimit("1M"))
 	e.GET("/products", h.GetProducts)

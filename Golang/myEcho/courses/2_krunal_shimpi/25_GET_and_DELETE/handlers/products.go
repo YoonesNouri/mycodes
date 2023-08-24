@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"mymodule/2_krunal_shimpi/24_PUT_PATCH_method/dbiface"
+	"mymodule/2_krunal_shimpi/25_GET_and_DELETE/dbiface"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -47,6 +47,22 @@ func (p *ProductValidator) Validate(i interface{}) error {
 	return p.validator.Struct(i)
 }
 
+// * findProduct finds a single product
+func findProduct(ctx context.Context, id string, collection dbiface.CollectionAPI) (Product, error) {
+	var product Product
+	docID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return product, err
+	}
+	res := collection.FindOne(ctx, bson.M{"_id": docID})
+	err = res.Decode(&product)
+	if err != nil {
+		return product, err
+	}
+	return product, nil
+}
+
+// * findProducts finds a list of products
 func findProducts(ctx context.Context, q url.Values, collection dbiface.CollectionAPI) ([]Product, error) {
 	var products []Product
 	filter := make(map[string]interface{})
@@ -73,9 +89,32 @@ func findProducts(ctx context.Context, q url.Values, collection dbiface.Collecti
 	return products, nil
 }
 
+func deleteProduct(ctx context.Context, id string, collection dbiface.CollectionAPI) (int64, error) {
+	docID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Errorf("Unable to convert to ObjectID : %v", err)
+		return 0, err
+	}
+	res, err := collection.DeleteOne(ctx, bson.M{"id": docID})
+	if err != nil {
+		log.Errorf("Unable to delete the product : %v", err)
+		return 0, err
+	}
+	return res.DeletedCount, nil
+}
+
+// * DeleteProduct deletes a single product
+func (h *ProductHandler) DeleteProduct(c echo.Context) error {
+	delCount, err := deleteProduct(context.Background(), c.Param("id"), h.Col)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, delCount)
+}
+
 func modifyProduct(ctx context.Context, id string, reqBody io.ReadCloser, collection dbiface.CollectionAPI) (Product, error) {
 	var product Product
-	//* find if the product exists, if err return 404
+	// find if the product exists, if err return 404
 	docID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		log.Errorf("can not convert to objectid : %v", err)
@@ -88,19 +127,19 @@ func modifyProduct(ctx context.Context, id string, reqBody io.ReadCloser, collec
 		return product, err //echo.NewHTTPError(500, "some message")
 	}
 
-	//* decode the req payload, if err return 500
+	// decode the req payload, if err return 500
 	if err := json.NewDecoder(reqBody).Decode(&product); err != nil {
 		log.Errorf("Unable to decode using reqbody : %v", err)
 		return product, err
 	}
 
-	//* validate the req, if err return 400
+	// validate the req, if err return 400
 	if err := v.Struct(product); err != nil {
 		log.Errorf("Unable to validate the struct : %v", err)
 		return product, err
 	}
 
-	//* update the product, if err return 500
+	// update the product, if err return 500
 	_, err = collection.UpdateOne(ctx, filter, bson.M{"$set": product})
 	if err != nil {
 		log.Errorf("Unable to update the Product : %v", err)
@@ -118,7 +157,16 @@ func (h *ProductHandler) UpdateProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
-// * GetProduct gets a list of products
+// * GetProduct gets a single product
+func (h *ProductHandler) GetProduct(c echo.Context) error {
+	product, err := findProduct(context.Background(), c.Param("id"), h.Col)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, product)
+}
+
+// * GetProducts gets a list of products
 func (h *ProductHandler) GetProducts(c echo.Context) error {
 	products, err := findProducts(context.Background(), c.QueryParams(), h.Col)
 	if err != nil {
