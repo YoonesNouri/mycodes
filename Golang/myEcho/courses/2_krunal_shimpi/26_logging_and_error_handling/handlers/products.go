@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"mymodule/2_krunal_shimpi/25_GET_and_DELETE/dbiface"
+	"mymodule/2_krunal_shimpi/26_logging_and_error_handling/dbiface"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -89,16 +89,16 @@ func findProducts(ctx context.Context, q url.Values, collection dbiface.Collecti
 	return products, nil
 }
 
-func deleteProduct(ctx context.Context, id string, collection dbiface.CollectionAPI) (int64, error) {
+func deleteProduct(ctx context.Context, id string, collection dbiface.CollectionAPI) (int64, *echo.HTTPError) {
 	docID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		log.Errorf("Unable to convert to ObjectID : %v", err)
-		return 0, err
+		return 0, echo.NewHTTPError(http.StatusInternalServerError, "Unable to convert to ObjectID")
 	}
 	res, err := collection.DeleteOne(ctx, bson.M{"id": docID})
 	if err != nil {
 		log.Errorf("Unable to delete the product : %v", err)
-		return 0, err
+		return 0, echo.NewHTTPError(http.StatusInternalServerError, "Unable to delete the product")
 	}
 	return res.DeletedCount, nil
 }
@@ -112,38 +112,39 @@ func (h *ProductHandler) DeleteProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, delCount)
 }
 
-func modifyProduct(ctx context.Context, id string, reqBody io.ReadCloser, collection dbiface.CollectionAPI) (Product, error) {
+func modifyProduct(ctx context.Context, id string, reqBody io.ReadCloser, collection dbiface.CollectionAPI) (Product, *echo.HTTPError) {
 	var product Product
 	// find if the product exists, if err return 404
 	docID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		log.Errorf("can not convert to objectid : %v", err)
-		return product, err // 500 error code
+		log.Errorf("can not convert to ObjectID : %v", err)
+		return product, echo.NewHTTPError(http.StatusInternalServerError, "Unable to convert to ObjectID")
 	}
 	filter := bson.M{"_id": docID}
 	res := collection.FindOne(ctx, filter)
 	if err := res.Decode(&product); err != nil {
 		log.Errorf("Unable to decode to product : %v", err)
-		return product, err //echo.NewHTTPError(500, "some message")
+		return product, echo.NewHTTPError(http.StatusNotFound, "Unable to find to product")
 	}
 
 	// decode the req payload, if err return 500
 	if err := json.NewDecoder(reqBody).Decode(&product); err != nil {
 		log.Errorf("Unable to decode using reqbody : %v", err)
-		return product, err
+		return product, echo.NewHTTPError(http.StatusBadRequest, "Unable to parse the request payload")
 	}
 
 	// validate the req, if err return 400
 	if err := v.Struct(product); err != nil {
 		log.Errorf("Unable to validate the struct : %v", err)
-		return product, err
+		return product, echo.NewHTTPError(http.StatusBadRequest, "Unable to validate the request payload")
 	}
 
 	// update the product, if err return 500
 	_, err = collection.UpdateOne(ctx, filter, bson.M{"$set": product})
 	if err != nil {
 		log.Errorf("Unable to update the Product : %v", err)
-		return product, err
+		return product, echo.NewHTTPError(http.StatusInternalServerError, "Unable to update the product")
+
 	}
 	return product, nil
 }
@@ -175,14 +176,14 @@ func (h *ProductHandler) GetProducts(c echo.Context) error {
 	return c.JSON(http.StatusOK, products)
 }
 
-func insertProducts(ctx context.Context, products []Product, collection dbiface.CollectionAPI) ([]interface{}, error) {
+func insertProducts(ctx context.Context, products []Product, collection dbiface.CollectionAPI) ([]interface{}, *echo.HTTPError) {
 	var insertedIds []interface{}
 	for _, product := range products {
 		product.ID = primitive.NewObjectID()
 		insertID, err := collection.InsertOne(ctx, product)
 		if err != nil {
 			log.Errorf("Unable to insert : %v", err)
-			return nil, err
+			return nil, echo.NewHTTPError(http.StatusInternalServerError, "Unable to insert to database")
 		}
 		insertedIds = append(insertedIds, insertID.InsertedID)
 	}
@@ -195,15 +196,14 @@ func (h *ProductHandler) CreateProducts(c echo.Context) error {
 	c.Echo().Validator = &ProductValidator{validator: v}
 	if err := c.Bind(&products); err != nil {
 		log.Errorf("Unable to bind: %v", err)
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, "Unable to parse request payload")
 	}
 	for _, product := range products {
 		if err := c.Validate(product); err != nil {
 			log.Errorf("Unable to validate product: %+v %v", product, err)
-			return err
+			return echo.NewHTTPError(http.StatusBadRequest, "Unable to validate request payload")
 		}
 	}
-
 	IDs, err := insertProducts(context.Background(), products, h.Col)
 	if err != nil {
 		return err

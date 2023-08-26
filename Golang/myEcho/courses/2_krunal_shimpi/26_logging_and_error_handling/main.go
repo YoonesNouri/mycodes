@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"mymodule/2_krunal_shimpi/25_GET_and_DELETE/config"
-	"mymodule/2_krunal_shimpi/25_GET_and_DELETE/handlers"
+	"mymodule/2_krunal_shimpi/26_logging_and_error_handling/config"
+	"mymodule/2_krunal_shimpi/26_logging_and_error_handling/handlers"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"
@@ -54,7 +54,7 @@ func addCorrelationID(next echo.HandlerFunc) echo.HandlerFunc {
 		} else {
 			NewID = id
 		}
-		
+
 		c.Request().Header.Set("CorrelationID", NewID)
 		c.Response().Header().Set("CorrelationID", NewID)
 		return next(c)
@@ -66,6 +66,10 @@ func main() {
 	e.Logger.SetLevel(log.ERROR)
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Pre(addCorrelationID)
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: `${time_rfc3339_nano} ${remote_ip}  ${host} ${method} ${uri} ${user_agent}` + 
+		` ${status} ${error} ${latency_human}` + "\n", 
+	}))
 	h := &handlers.ProductHandler{Col: col}
 	e.GET("/products/:id", h.GetProduct)
 	e.DELETE("/products/:id", h.DeleteProduct)
