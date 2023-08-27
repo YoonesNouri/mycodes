@@ -93,6 +93,7 @@ func main() {
 	e.POST("/products", h.CreateProducts, middleware.BodyLimit("1M"))
 	e.GET("/products", h.GetProducts)
 	e.POST("/users", uh.CreateUser)
+	e.POST("/auth", uh.AuthnUser)
 	e.Logger.Infof("Listening on %s:%s", cfg.Host, cfg.Port)
 	e.Logger.Fatal(e.Start(fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)))
 }
