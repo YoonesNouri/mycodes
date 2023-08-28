@@ -9,5 +9,5 @@ type Properties struct {
 	DBName            string `env:"DB_NAME" env_default:"tronics"`
 	ProductCollection string `env:"PRODUCTS_COL_NAME" env_default:"products"`
 	UsersCollection   string `env:"USERS_COL_NAME" env_default:"users"`
-	JwtTokenSecret string `env:"JWT_TOKEN_SECRET" env_default:"abrakadabra"`
+	JwtTokenSecret    string `env:"JWT_TOKEN_SECRET" env_default:"abrakadabra"`
 }

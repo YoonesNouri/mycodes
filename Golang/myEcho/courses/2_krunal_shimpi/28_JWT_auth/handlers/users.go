@@ -95,7 +95,7 @@ func insertUser(ctx context.Context, user User, collection dbiface.CollectionAPI
 // * CreateUser creates a user
 func (h *UsersHandler) CreateUser(c echo.Context) error {
 	var user User
-	// v := validator.New()
+	v := validator.New()
 	c.Echo().Validator = &userValidator{validator: v}
 	if err := c.Bind(&user); err != nil {
 		log.Errorf("Unable to bind the user struct.")
@@ -110,6 +110,13 @@ func (h *UsersHandler) CreateUser(c echo.Context) error {
 		log.Errorf("Unable to insert to database")
 		return err
 	}
+	//? when you sign up you are also signed in
+	token, er := createToken(user.Email)
+	if err != nil {
+		log.Errorf("Unable to generate the token.")
+		return echo.NewHTTPError(http.StatusInternalServerError, "Unable to generate the token")
+	}
+	c.Response().Header().Set("x-auth-token", token)
 	return c.JSON(http.StatusCreated, insertedUserID)
 }
 
@@ -136,7 +143,7 @@ func authentincateUser(ctx context.Context, reqUser User, collection dbiface.Col
 // * AuthnUser authenticates a user
 func (h *UsersHandler) AuthnUser(c echo.Context) error {
 	var user User
-	// v := validator.New()
+	v := validator.New()
 	c.Echo().Validator = &userValidator{validator: v}
 	if err := c.Bind(&user); err != nil {
 		log.Errorf("Unable to bind the user struct.")
@@ -156,6 +163,6 @@ func (h *UsersHandler) AuthnUser(c echo.Context) error {
 		log.Errorf("Unable to generate token.")
 		return echo.NewHTTPError(http.StatusInternalServerError, "Unable to generate token")
 	}
-	c.Response().Header().Set("x-auth-token", token)
+	c.Response().Header().Set("x-auth-token", "Bearer "+token) //space after Bearer is necessary here
 	return c.JSON(http.StatusOK, User{Email: user.Email})
 }
