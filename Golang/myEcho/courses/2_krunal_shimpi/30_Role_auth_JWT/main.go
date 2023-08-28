@@ -3,10 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"strings"
 
-	"mymodule/2_krunal_shimpi/29_JWT_middleware_auth/config"
-	"mymodule/2_krunal_shimpi/29_JWT_middleware_auth/handlers"
+	"mymodule/2_krunal_shimpi/30_Role_auth_JWT/config"
+	"mymodule/2_krunal_shimpi/30_Role_auth_JWT/handlers"
 
+	"github.com/golang-jwt/jwt"
+	// "github.com/labstack/echo-jwt"
+	// "github.com/dgrijalva/jwt-go"
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -76,6 +81,24 @@ func addCorrelationID(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+func adminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		hToken := c.Request().Header.Get("x-auth-token") // Bearer token
+		token := strings.Split(hToken, " ")[1]
+		claims := jwt.MapClaims{}
+		_, err := jwt.ParseWithClaims(token, claims, func(*jwt.Token) (interface{}, error) {
+			return []byte(cfg.JwtTokenSecret), nil
+		})
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, "Unable to parse token")
+		}
+		if !claims["authorized"].(bool) {
+			return echo.NewHTTPError(http.StatusForbidden, "Not authorized")
+		}
+		return next(c)
+	}
+}
+
 func main() {
 	e := echo.New()
 	e.Logger.SetLevel(log.ERROR)
@@ -92,7 +115,7 @@ func main() {
 	h := &handlers.ProductHandler{Col: prodCol}
 	uh := &handlers.UsersHandler{Col: usersCol}
 	e.GET("/products/:id", h.GetProduct)
-	e.DELETE("/products/:id", h.DeleteProduct, jwtMiddleware)
+	e.DELETE("/products/:id", h.DeleteProduct, jwtMiddleware, adminMiddleware)
 	e.PUT("/products", h.UpdateProduct, middleware.BodyLimit("1M"), jwtMiddleware)
 	e.POST("/products", h.CreateProducts, middleware.BodyLimit("1M"), jwtMiddleware)
 	e.GET("/products", h.GetProducts)

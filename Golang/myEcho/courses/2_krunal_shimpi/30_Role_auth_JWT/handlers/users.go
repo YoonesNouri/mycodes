@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"mymodule/2_krunal_shimpi/29_JWT_middleware_auth/config"
-	"mymodule/2_krunal_shimpi/29_JWT_middleware_auth/dbiface"
+	"mymodule/2_krunal_shimpi/30_Role_auth_JWT/config"
+	"mymodule/2_krunal_shimpi/30_Role_auth_JWT/dbiface"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/ilyakaznacheev/cleanenv"
@@ -23,6 +23,7 @@ import (
 type User struct {
 	Email    string `json:"username" bson:"username" validate:"required,email"`
 	Password string `json:"password,omitempty" bson:"password" validate:"required,min=8,max=300"`
+	isadmin  bool   `json:"isadmin,omitempty" bson:"isadmin"`
 }
 
 // * UsersHandler users handler
@@ -49,13 +50,13 @@ func isCredValid(givenPwd, storedPwd string) bool {
 	return true
 }
 
-func createToken(username string) (string, error) {
+func (u User)createToken() (string, error) {
 	if err := cleanenv.ReadEnv(&cfg); err != nil {
 		log.Fatalf("Configuration cannot be read: %v", err)
 	}
 	claims := jwt.MapClaims{}
-	claims["authorized"] = true
-	claims["user_id"] = username
+	claims["authorized"] = u.isadmin
+	claims["user_id"] = u.Email
 	claims["exp"] = time.Now().Add(time.Minute * 15).Unix()
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := at.SignedString([]byte(cfg.JwtTokenSecret))
@@ -111,7 +112,7 @@ func (h *UsersHandler) CreateUser(c echo.Context) error {
 		return err
 	}
 	//? when you sign up you are also signed in
-	token, er := createToken(user.Email)
+	token, er := user.createToken()
 	if er != nil {
 		log.Errorf("Unable to generate the token.")
 		return echo.NewHTTPError(http.StatusInternalServerError, "Unable to generate the token")
@@ -158,7 +159,7 @@ func (h *UsersHandler) AuthnUser(c echo.Context) error {
 		log.Errorf("Unable to authenticate to database.")
 		return err
 	}
-	token, er := createToken(user.Email)
+	token, er := user.createToken()
 	if er != nil {
 		log.Errorf("Unable to generate token.")
 		return echo.NewHTTPError(http.StatusInternalServerError, "Unable to generate token")

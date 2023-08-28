@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"mymodule/2_krunal_shimpi/29_JWT_middleware_auth/dbiface"
+	"mymodule/2_krunal_shimpi/30_Role_auth_JWT/dbiface"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
