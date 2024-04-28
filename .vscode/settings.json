@@ -8,5 +8,6 @@
 
     ],
     "tabnine.useProxySupport": true,
-    "go.toolsEnvVars": {}
+    "go.toolsEnvVars": {},
+    "dart.flutterSdkPath": "~/Desktop/program files/flutter"
 }
