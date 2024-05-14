@@ -4,10 +4,28 @@
         "gonic"
     ],
     "tabnine.logEngine": false,
-    "tabnine.disableLineRegex": [
-
-    ],
+    "tabnine.disableLineRegex": [],
     "tabnine.useProxySupport": true,
-    "go.toolsEnvVars": {},
-    "dart.flutterSdkPath": "~/Desktop/program files/flutter"
+    "go.toolsEnvVars": {
+        "GOPATH": "C:\\Users\\yoone\\go"
+    },
+    "dart.flutterSdkPath": "~/Desktop/program files/flutter",
+    "folders": [
+        {
+            "path": "C:\\Users\\yoone\\myProjects\\Golang"
+        }
+    ],
+    "go.testEnvVars": {
+        "GO111MODULE": "on"
+    },
+    "go.useLanguageServer": true,
+    "go.formatTool": "goimports",
+    "go.formatFlags": [],
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [],
+    "go.vetOnSave": "workspace",
+    "go.installDependenciesWhenBuilding": false,
+    "genieai.openai.model": "gpt-3.5-turbo-1106",
+    "genieai.openai.organization": "",
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }

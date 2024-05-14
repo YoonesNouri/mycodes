@@ -1,0 +1,21 @@
+go 1.22.2
+
+use (
+	./Golang/AI/01_chat_bot
+	./Golang/Code_With_Ryan/01_channels
+	./Golang/Code_With_Ryan/02_context
+	./Golang/Code_With_Ryan/03_interface
+	./Golang/DataBase/SQL/PostgreSQL/01_go_postgres_gorm
+	./Golang/WB_websocket/01_ws_gorilla
+	./Golang/WB_websocket/02_by_go_library
+	./Golang/algorithm_book/42_m27b_s83
+	./Golang/algorithm_book/51_reverse_number_m47_s106
+	./Golang/blockchain/01
+	./Golang/cobra/01_passwordGeneratorCLI/password
+	./Golang/go_tour/05_generics/003_generics_course
+	./Golang/kubernetes/01
+	./Golang/myEcho/courses/1_bluebot/08_JWT/8.1_JWT_Token_From_a_Cookie_Side_Quest
+	./Golang/myEcho/courses/2_krunal_shimpi/31_final_code
+	./Golang/myEcho/courses/3_Akhil_Sharma/API-using-go-Echo-with-test
+	./Golang/myGoCodes/04_go_API_payment_gateway
+)
