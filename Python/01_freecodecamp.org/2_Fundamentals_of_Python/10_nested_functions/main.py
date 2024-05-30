@@ -9,3 +9,10 @@ def count():
     increment()
 
 count()
+count()
+count()
+
+# output:
+# 1  
+# 1
+# 1
