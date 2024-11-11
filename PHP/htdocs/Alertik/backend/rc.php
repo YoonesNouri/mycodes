@@ -1,0 +1,1 @@
+<?phpini_set("display_errors", 1);error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));include '../conf.php';include '../lib/auth-browser.php';if (PHP_SAPI != 'cli') $current_user=user_authenticate();include '../lib/mysql.php';include '../lib/web.php';include '../lib/table.php';include '../private/backend.php';

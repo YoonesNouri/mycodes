@@ -27,5 +27,7 @@
     "go.installDependenciesWhenBuilding": false,
     "genieai.openai.model": "gpt-3.5-turbo-1106",
     "genieai.openai.organization": "",
-    "CodeGPT.apiKey": "CodeGPT Plus Beta"
+    "CodeGPT.apiKey": "CodeGPT Plus Beta",
+    "php.debug.executablePath": "C:/xampp/php/php.exe",
+    "php.validate.executablePath": "C:/xampp/php/php.exe",
 }

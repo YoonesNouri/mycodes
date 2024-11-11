@@ -1,0 +1,30 @@
+<?php
+include '../private-notify/notify-backend.php';
+include '../private-notify/lib-user.php';
+$org_price=get_price(0,3,11);
+if (strstr($org_price,'.')) $decimal=1; else $decimal=0;
+echo number_format($org_price,$decimal);
+//echo number_format(get_price(0,0,1),1);
+exit;
+//echo '<br />simple';
+//echo stristr(' بورس ','بورس');
+//echo '<br />encode';
+//$str=htmlentities(' قيمت سكه tamam ', ENT_COMPAT);
+print_r(preg_split("/[,\n\.]+/", "This-sign, is \nwhy. we, can't have nice things"));
+$str=mb_convert_encoding(' قيمت سكه tamam ','HTML-ENTITIES','utf-8');
+$str=' قيمت سكه tamam ';
+//$str=bin2hex (' قيمت سكه tamam ');
+
+//$str=utf8_decode(' قيمت سكه tamam ');
+//$key=htmlentities('سکه', ENT_COMPAT, "UTF-8");
+$key=bin2hex('سکه');
+$key=mb_convert_encoding('سکه','HTML-ENTITIES','utf-8');
+$key='سکه';
+echo $str."==".$key.'<br />';
+echo '='.mb_stristr($str,$key,true,'UTF-8').'=';
+echo '<br />encode utf-8';
+echo mb_stristr(' قيمت سكه tamam ','سکه',true,'UTF-8');
+echo '<br />encosss';
+echo mb_stristr(' قيمت سكه tamam ','سکه',true,'unicode');
+;
+var_dump(preg_match('/(.*سکه.*)/i', ' قيمت سكه tamam '));

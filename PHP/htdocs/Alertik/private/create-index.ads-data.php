@@ -1,0 +1,34 @@
+<?php
+$ads=array(
+	'arzlive'=>array('img'=>'//www.mazanex.com/a/arzlive.png','url'=>'//www.arzlive.com/'),
+	'mahak'=>array('img'=>'//www.mazanex.com/a/mahak.png','url'=>'//www.mahak-charity.org/'),
+	'child'=>array('img'=>'//www.mazanex.com/a/childf.png','url'=>'//childf.com/WebSite/WebPages/About.aspx'),
+	'komeil'=>array('img'=>'//www.mazanex.com/a/komeil.png','url'=>'//www.komeil.org/'),
+	'rad'=>array('img'=>'//www.mazanex.com/a/rad1.jpg','url'=>'//www.raad-charity.org/'),
+
+	//'mazanex'=>array('img'=>'/a/mx-3m.png','url'=>'//www.mazanex.com/ads.html'),
+	'rfjewelry'=>array('img'=>'//www.mazanex.com/a/rf.jpg','url'=>'//www.rfjewelry.com/'),
+	'rfmount'=>array('img'=>'//www.mazanex.com/a/bam.png','url'=>'//www.rfmount.com/'),
+	'sang5'=>array('img'=>'//www.mazanex.com/a/sang5.jpg','url'=>'//www.sangno.com/?5'),
+	//'sang6'=>array('img'=>'/a/sang6.jpg','url'=>'//www.sangno.com/?6'),
+	//'sang7'=>array('img'=>'/a/sang7.jpg','url'=>'//www.sangno.com/?7'),
+	'mobile'=>array('img'=>'//www.mazanex.com/a/mmc1.jpg','url'=>'//www.mobilemarketcenter.com/'),
+	'ciodo'=>array('img'=>'//www.mazanex.com/a/cd.jpg','url'=>'//www.ciodo.com/'),
+	'cvas'=>array('img'=>'//www.mazanex.com/a/cvas.png','url'=>'//www.cvas.ir/'),
+
+);
+$ads_display=array(
+	array('arzlive',1),
+	array('rfjewelry',1),
+	array('nimset',1),
+	array('cvas',1),
+	//array('rfjewelry',1),
+	//array('mobile',1),
+	//array('komeil',1),
+	array('arzlive',1),
+	array('cvas',1),
+	array('arzlive',1),
+	array('child',1),
+	//array('mahak',1),
+	array('ciodo',1),
+);

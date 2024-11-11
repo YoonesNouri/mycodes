@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"path": "/home/web/mazanex",
+			"file_exclude_patterns":[
+			"*.json",
+			"*.jpg",
+			"*.png","*.html"
+			],
+			"folder_exclude_patterns":[
+				"tmp",
+				"logs"
+			]
+		}
+	]
+}
