@@ -1,1 +1,0 @@
-<?phpinclude 'rc.php';html_write('charts.html',theme([1=>'charts',0=>'head',10=>'foot'],[],$theme_folder));html_write('webmaster.html',theme([1=>'webmaster',0=>'head',10=>'foot'],['js_file'=>'va.js'],$theme_folder));html_write('app.html',theme([1=>'app',0=>'head',10=>'foot'],[],$theme_folder));
