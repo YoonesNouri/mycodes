@@ -1,4 +1,4 @@
-module context_module
+module context_module_channels
 
 go 1.20
 
