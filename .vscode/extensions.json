@@ -68,8 +68,8 @@
     "sonarsource.sonarlint-vscode",
     "golang.go-nightly",
     "tabnine.tabnine-vscode",
-    "github.copilot-chat",
     "golang.go",
-    "danielsanmedium.dscodegpt"
+    "danielsanmedium.dscodegpt",
+    "github.copilot-chat"
   ]
 }
