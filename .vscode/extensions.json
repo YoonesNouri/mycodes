@@ -69,7 +69,8 @@
     "golang.go-nightly",
     "tabnine.tabnine-vscode",
     "golang.go",
-    "danielsanmedium.dscodegpt",
-    "github.copilot-chat"
+    "github.copilot-chat",
+    "github.copilot",
+    "danielsanmedium.dscodegpt"
   ]
 }
