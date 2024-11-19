@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafka Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kafka Messages</h1>
+    <p><strong>Received Messages:</strong></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Coffee Type</th>
+            </tr>
+        </thead>
+        <tbody id="messages"></tbody>
+    </table>
+    <script>
+        const ws = new WebSocket("ws://localhost:8080/");
+        const messagesTable = document.getElementById("messages");
+
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            const row = document.createElement("tr");
+            const customerCell = document.createElement("td");
+            const coffeeCell = document.createElement("td");
+
+            customerCell.textContent = message.customer_name;
+            coffeeCell.textContent = message.coffee_type;
+
+            row.appendChild(customerCell);
+            row.appendChild(coffeeCell);
+            messagesTable.appendChild(row);
+        };
+
+        ws.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+
+        ws.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+    </script>
+</body>
+</html>

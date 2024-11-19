@@ -1,0 +1,1 @@
+<?phpinclude 'notify-backend.php';include 'create-page-faq.php';include 'create-page-agreement.php';

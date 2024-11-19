@@ -1,0 +1,36 @@
+/*		Flags	*/
+.fg{
+	width: 24px;
+	height: 18px;
+	display:inline-block;
+	padding:0;
+	margin:0 0 -4px 5px;
+	background:url(fgs.png) no-repeat;
+}
+.fg-43{background-position: -24px 0}
+.fg-60{background-position: -48px 0}
+.fg-49 {background-position: -72px 0}
+.fg-59{background-position: -96px 0}
+.fg-44{background-position: -120px 0}
+.fg-51{background-position: 0 -19px}
+.fg-45{background-position: -24px -19px}
+.fg-64{background-position: -48px -19px}
+.fg-41{background-position: -72px -19px}
+.fg-42{background-position: -96px -19px}
+.fg-53{background-position: -120px -19px}
+.fg-48{background-position: 0 -38px}
+.fg-56{background-position: -24px -38px}
+.fg-0{background-position: -48px -38px}
+.fg-47 {background-position: -72px -38px}
+.fg-65{background-position: -96px -38px}
+.fg-55{background-position: -120px -38px}
+.fg-54{background-position: 0 -57px}
+.fg-52 {background-position: -24px -57px}
+.fg-58{background-position: -48px -57px}
+.fg-62 {background-position: -72px -57px}
+.fg-61{background-position: -96px -57px}
+.fg-50{background-position: -120px -57px}
+.fg-63{background-position: 0 -76px}
+.fg-57{background-position: -24px -76px}
+.fg-46{background-position: -48px -76px}
+.fg-40{background-position: -72px -76px}

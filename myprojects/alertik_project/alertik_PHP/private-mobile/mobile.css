@@ -1,0 +1,37 @@
+            body{
+				direction:rtl;
+			}
+			.dynamic{
+				display:block!important;
+			}
+			.dynamic span{
+				display:inline!important;
+			}
+			.neg{
+				color:#C72A2C;
+			}
+			.pos{
+				color:#27A924;
+			}
+			.notice div{
+				background-color:#DFF2BF;
+				color:#4F8A10;
+				padding:5px;
+				border:1px solid;
+			}
+			.notice a{
+				color:#D6010E;
+			}
+			.ad{
+				margin:15px auto;
+				width:250px;
+				height:120px;
+			}
+			.ad img{
+				width:250px;
+				height:120px;
+			}
+			.ui-grid-b .ui-block-a {				
+				direction: ltr;
+				text-align: right;
+			}
