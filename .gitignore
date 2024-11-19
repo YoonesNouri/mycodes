@@ -1,1 +1,2 @@
-PHP/htdocs/alertik_PHP/
+# Ignore myprojects folder and all its subfolders
+/myprojects/
